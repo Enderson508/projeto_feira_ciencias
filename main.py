@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 
 # Constante de Coulomb
 K = 9e9  # N m²/C²
+# constante de newthon
+G = 6.674 * 10e-11
 
 # Definindo o valor limite de corrente para verificação de segurança
 max_current = 10  # Amperes
@@ -33,6 +35,59 @@ def calculate_current(charge, time):
     plt.savefig('current_plot.png')
     plt.close()
     return current, steps
+
+# Função para calcular a força da gravitação universal
+def calculate_gravitational_force(mass1, mass2, distance):
+    if distance <= 0:
+        st.error("A distância deve ser maior que zero.")
+        return None, ""
+    force = G * mass1 * mass2 / distance ** 2
+    steps = f"\n## Cálculo da Força da Gravitação Universal (N)\n" \
+            f"\n### Fórmula\n" \
+            f"\n$$F = \\frac{{G \\cdot m1 \\cdot m2}}{{d^2}}$$\n" \
+            f"\n### Substituindo os valores\n" \
+            f"\n$$F = \\frac{{{G} \\cdot {mass1} \\cdot {mass2}}}{{{distance}^2}}$$\n" \
+            f"\n### Resultado\n" \
+            f"\n$$F = {force:.2e} \\text{{ m/s²}}$$\n"
+    # Plotar gráfico
+    distance_vals = list(range(1, 11))  # Distância de 1 a 10 metros
+    force_vals = [G * mass1 * mass2 / (d_val ** 2) for d_val in distance_vals]
+    plt.figure(figsize=(10, 5))
+    plt.plot(distance_vals, force_vals, marker='o')
+    plt.xlabel('Distância (m)')
+    plt.ylabel('Força (N)')
+    plt.title('Gráfico da Força da Gravitação Universal')
+    plt.grid(True)
+    plt.savefig('gravitational_force_plot.png')
+    plt.close()
+    return force, steps
+
+#Função para calcular torriceli
+def calculate_torricelli_force(vi, a, s):
+    velocit = vi**2 + 2*a*s
+    vf = math.sqrt(velocit)
+    steps = f"## Cálculo de Torricelli\n"\
+        f"### Fórmula\n"\
+        f"\n$$Vf^2 = vi^2 + 2a\\cdot s$$\n"\
+        f"\n### Substituindo os valores\n"\
+        f"\n$$Vf^2 = {vi}^2 + 2 \\cdot {a}\\cdot {s}$$\n"\
+        f"\n### Resultado\n"\
+        f"\n$$Vf = {vf:.2f} \\text{{ m/s}}$$\n"
+    
+    # Plotar gráfico
+    distance_vals = list(range(1, 11))  # Distância de 1 a 10 metros
+    velocity_vals = [math.sqrt(vi**2 + 2*a*d_val) for d_val in distance_vals]
+    plt.figure(figsize=(10, 5))
+    plt.plot(distance_vals, velocity_vals, marker='o')
+    plt.xlabel('Distância (m)')
+    plt.ylabel('Velocidade (m/s)')
+    plt.title('Gráfico da Velocidade de acordo com a Lei de Torricelli')
+    plt.grid(True)
+    plt.savefig('torricelli_plot.png')
+    plt.close()
+    return velocit, steps
+
+    
 
 # Função para calcular a quantidade de carga
 def calculate_charge(current, time):
@@ -272,7 +327,7 @@ def main():
         "Escolha o tipo de cálculo:",
         ["Intensidade da Corrente", "Quantidade de Carga", "Tempo", "Raízes da Equação de Bhaskara",
          "Campo Elétrico", "Força Elétrica", "Velocidade Média", "Movimento Uniforme",
-         "Movimento Uniformemente Acelerado"]
+         "Movimento Uniformemente Acelerado","Gravitação universal", "Equação de Torricelli"]
     )
     
     if calculation_type == "Intensidade da Corrente":
@@ -284,6 +339,18 @@ def main():
                 st.write(f"Intensidade da Corrente: {current:.2f} A")
                 st.markdown(steps)
                 st.image('current_plot.png')
+
+
+    elif calculation_type == "Equação de Torricelli":
+        st.header('Cálculo da Velocidade Final com Torricelli')
+        vi = st.number_input('Velocidade Inicial (m/s)')
+        a = st.number_input('Aceleração (m/s²)')
+        s = st.number_input('Distância (m)')
+        if st.button('Calcular Velocidade Final'):
+            vf, steps = calculate_torricelli_force(vi, a, s)
+            if vf is not None:
+                st.write(steps)
+                st.image('torricelli_plot.png')       
 
     elif calculation_type == "Quantidade de Carga":
         current = st.number_input("Digite a corrente (A)", value=0.0)
@@ -315,6 +382,17 @@ def main():
                 st.write(f"Raízes: x1 = {roots[0]:.2f}, x2 = {roots[1]:.2f}")
                 st.markdown(steps)
                 st.image('bhaskara_plot.png')
+
+    elif calculation_type == "Gravitação universal":
+        Massa1 = st.number_input("Digite a massa 1 (kg)", value=0.0)
+        Massa2 = st.number_input("Digite a massa 2 (kg)", value=0.0)
+        Distância = st.number_input("Digite a distância (m)", value= 0.0)
+        if st.button("Calcular Força"):
+            force, steps = calculate_gravitational_force(Massa1, Massa2, Distância)
+            if force is not None:
+                st.write(f"Força: {force:.2f} m/s")
+                st.markdown(steps)
+                st.image('gravitational_force_plot.png')          
 
     elif calculation_type == "Campo Elétrico":
         charge = st.number_input("Digite a carga (C)", value=0.0)
