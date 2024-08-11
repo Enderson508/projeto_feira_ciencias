@@ -62,6 +62,32 @@ def calculate_gravitational_force(mass1, mass2, distance):
     plt.close()
     return force, steps
 
+def calculate_distance_replace(Mas1, Mas2, F):
+    distance = G * Mas1 * Mas2 / F
+    d = math.sqrt(distance)
+    steps = f"\n## Cálculo de Distância\n"\
+            f"\n### Formula\n"\
+            f"\n$$d^2 = \\frac{{G \\cdot M1 \\cdot M2}}{{F}}$$\n"\
+            f"\n### Substituindo Valores\n"\
+            f"\n$$d^2 = \\frac{{{G} \\cdot{Mas1} \\cdot {Mas2}}}{{{F}}}$$\n"\
+            f"\n### Resultado\n"\
+            f"\n$$d = {d:.2e} \\text{{ m}}$$\n"
+            
+    distance_vals = list(range(1, 11))  # Distância de 1 a 10 metros
+    force_vals = [G * Mas1 * Mas2 / (d_val ** 2) for d_val in distance_vals]
+
+    plt.figure(figsize=(10, 5))
+    plt.plot(distance_vals, force_vals, marker='o', linestyle='-')
+    plt.xlabel('Distância (m)')
+    plt.ylabel('Força (N)')
+    plt.title('Gráfico da Força da Gravitação Universal')
+    plt.grid(True)
+    plt.savefig('gravitational_force_plot.png')
+    plt.close()
+
+    return d, steps      
+           
+
 #Função para calcular torriceli
 def calculate_torricelli_force(vi, a, s):
     velocit = vi**2 + 2*a*s
@@ -327,7 +353,7 @@ def main():
         "Escolha o tipo de cálculo:",
         ["Intensidade da Corrente", "Quantidade de Carga", "Tempo", "Raízes da Equação de Bhaskara",
          "Campo Elétrico", "Força Elétrica", "Velocidade Média", "Movimento Uniforme",
-         "Movimento Uniformemente Acelerado","Gravitação universal", "Equação de Torricelli"]
+         "Movimento Uniformemente Acelerado","Gravitação universal","Distância da Gravitação", "Equação de Torricelli"]
     )
     
     if calculation_type == "Intensidade da Corrente":
@@ -386,13 +412,23 @@ def main():
     elif calculation_type == "Gravitação universal":
         Massa1 = st.number_input("Digite a massa 1 (kg)", value=0.0)
         Massa2 = st.number_input("Digite a massa 2 (kg)", value=0.0)
-        Distância = st.number_input("Digite a distância (m)", value= 0.0)
+        Distância = st.number_input("Digite a distância/Força (m)", value=0.0)
         if st.button("Calcular Força"):
             force, steps = calculate_gravitational_force(Massa1, Massa2, Distância)
             if force is not None:
                 st.write(f"Força: {force:.2f} m/s")
                 st.markdown(steps)
-                st.image('gravitational_force_plot.png')          
+                st.image('gravitational_force_plot.png')
+
+
+        if st.button("Calcular Distância"):
+            force, steps = calculate_gravitational_force(Massa1, Massa2, Distância)
+            distance, steps = calculate_distance_replace(Massa1, Massa2, Distância)
+            if distance is not None:
+                st.write(f"Distância: {distance:.2f} m/s")
+                st.markdown(steps)
+                st.image('gravitational_distance_replaceplot.png')
+
 
     elif calculation_type == "Campo Elétrico":
         charge = st.number_input("Digite a carga (C)", value=0.0)
