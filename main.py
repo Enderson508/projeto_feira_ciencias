@@ -353,7 +353,7 @@ def main():
         "Escolha o tipo de cálculo:",
         ["Intensidade da Corrente", "Quantidade de Carga", "Tempo", "Raízes da Equação de Bhaskara",
          "Campo Elétrico", "Força Elétrica", "Velocidade Média", "Movimento Uniforme",
-         "Movimento Uniformemente Acelerado","Gravitação universal","Distância da Gravitação", "Equação de Torricelli"]
+         "Movimento Uniformemente Acelerado","Gravitação universal", "Equação de Torricelli"]
     )
     
     if calculation_type == "Intensidade da Corrente":
