@@ -7,6 +7,9 @@ K = 9e9  # N m²/C²
 # constante de newthon
 G = 6.674 * 10e-11
 
+# pi
+π = 3.14
+
 # Definindo o valor limite de corrente para verificação de segurança
 max_current = 10  # Amperes
 
@@ -35,6 +38,81 @@ def calculate_current(charge, time):
     plt.savefig('current_plot.png')
     plt.close()
     return current, steps
+
+
+
+
+#Geometria Plana(começo)
+
+def calculate_area_replace(π, raio):
+    are = π * raio ** 2
+    steps = f"\n## Calculando área do Círculo\n"\
+            f"\n### Fórmula\n" \
+            f"\n$$A = π \\cdot r^2$$\n"\
+            f"\n## substituindo valores\n" \
+            f"\n$$A = {π} \\cdot {raio}^2$$\n" \
+            f"\n##Resultado\n"\
+            f"\n$$A = {are:.2f} \\text A$$\n"\
+            
+
+    # Plotar gráfico
+    distance_val = list(range(1, 11))  # Distância de 1 a 10 metros
+    velocity_val = [(π * raio * d_val) for d_val in distance_val]
+    plt.figure(figsize=(10, 5))
+    plt.plot(distance_val, velocity_val, marker='o')
+    plt.xlabel('Distância (m)')
+    plt.ylabel('Velocidade (m/s)')
+    plt.title('Gráfico da Velocidade de acordo com a Área do Círculo')
+    plt.grid(True)
+    plt.savefig('area_plot.png')
+    plt.close()
+    return are, steps
+
+def calculate_triangle_ll(h, ary):
+    hrr = ary * h / 2
+    steps = f"\n### Calculando a Área\n" \
+            f"\n## Fórmula\n" \
+            f"\n$$A = \\frac{{B \\cdot H}}{{2}}$$\n" \
+            f"\n## Substituindo valores\n" \
+            f"\n$$A = \\frac{{ {ary} \\cdot {h}}}{{{2}}}$$\n" \
+            f"\n## Resultado\n" \
+            f"\n$$A = {hrr:.2f}$$\n"
+    
+
+    distance_vllil = list(range(1, 11))  # Distância de 1 a 10 metros
+    velocity_vllil = [hrr * d_val for d_val in distance_vllil]  # Usar a área calculada no gráfico
+    plt.figure(figsize=(10, 5))
+    plt.plot(distance_vllil, velocity_vllil, marker='o')
+    plt.xlabel('Distância (m)')
+    plt.ylabel('Velocidade (m/s)')
+    plt.title('Gráfico da Velocidade de acordo com a Área do Triângulo')
+    plt.grid(True)
+    plt.savefig('area_triangle.png')
+    plt.close()
+    return hrr, steps
+
+
+def calculate_area_trapez(trap, trapl, hll):
+    result = (trap + trapl) * hll / 2
+    steps = f"\n### Calculando Área do Trapézio\n" \
+            f"\n## Fórmula\n" \
+            f"\n$$A = \\frac{{ (b1 + b2) \\cdot h}}{{2}}$$\n" \
+            f"\n## Substituindo Valores\n" \
+            f"\n$$A = \\frac{{ ({trap} + {trapl}) \\cdot {hll}}}{{{2}}}$$\n" \
+            f"\n## Resultado\n" \
+            f"\n$$A = {result:.2f}$$\n"
+    
+    distance_trap = list(range(1, 11))  # Distância de 1 a 10 metros
+    velocity_trap = [result * d_val for d_val in distance_trap]  # Usar a área calculada no gráfico
+    plt.figure(figsize=(10, 5))
+    plt.plot(distance_trap, velocity_trap, marker='o')
+    plt.xlabel('Distância (m)')
+    plt.ylabel('Velocidade (m/s)')
+    plt.title('Gráfico da Velocidade de acordo com a Área do Triângulo')
+    plt.grid(True)
+    plt.savefig('area_trapezio.png')
+    plt.close()
+    return result, steps
 
 # Função para calcular a força da gravitação universal
 def calculate_gravitational_force(mass1, mass2, distance):
@@ -352,9 +430,14 @@ def main():
     calculation_type = st.selectbox(
         "Escolha o tipo de cálculo:",
         ["Intensidade da Corrente", "Quantidade de Carga", "Tempo", "Raízes da Equação de Bhaskara",
-         "Campo Elétrico", "Força Elétrica", "Velocidade Média", "Movimento Uniforme",
+         "Campo Elétrico", "Força Elétrica", "Geometria Plana", "Velocidade Média", "Movimento Uniforme",
          "Movimento Uniformemente Acelerado","Gravitação universal", "Equação de Torricelli"]
-    )
+
+
+    )    
+    
+
+
     
     if calculation_type == "Intensidade da Corrente":
         charge = st.number_input("Digite a carga (C)", value=0.0)
@@ -489,6 +572,44 @@ def main():
                 st.write(f"Deslocamento: {displacement:.2f} m")
                 st.markdown(steps)
                 st.image('displacement_plot.png')
+
+
+    #GEOMETRIA PLANA            
+    elif calculation_type == "Geometria Plana":
+        raio = st.number_input("Digite o  raio (r)", value=0.0)
+        if st.button("Calcular Círculo"):
+            are, steps = calculate_area_replace(π , raio)
+            if are is not None:
+                st.write(f"Área: {are:.2f}")
+                st.markdown(steps)
+                st.image('area_plot.png')
+    
+        ary = st.number_input("Base", value=0.0)
+        h = st.number_input("Altura(h)", value=0.0)
+        if  st.button("Calcular Área do triângulo"):
+            hrr, steps = calculate_triangle_ll(ary, h)
+            if hrr is not None:
+                st.write(f"Área: {hrr:.2f}") 
+                st.markdown(steps)
+                st.image('area_triangle.png')
+        trap = st.number_input("Base (1)", value = 0.0)
+        trapl = st.number_input("Base (2)", value = 0.0)  
+        hll = st.number_input("Alturas(h)", value = 0.0)
+        if st.button('Calcular Área do trapézio'):
+            result, steps = calculate_area_trapez(trap, trapl, hll)
+            if result is not None:
+                st.write(f"Área: {result:.2f}") 
+                st.markdown(steps)
+                st.image('area_trapezio.png')
+
+
+
+
+     
+            
+
+
+
 
 if __name__ == "__main__":
     main()
