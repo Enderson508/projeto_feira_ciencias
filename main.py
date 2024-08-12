@@ -82,7 +82,7 @@ def calculate_distance_replace(Mas1, Mas2, F):
     plt.ylabel('Força (N)')
     plt.title('Gráfico da Força da Gravitação Universal')
     plt.grid(True)
-    plt.savefig('gravitational_force_plot.png')
+    plt.savefig('gravitational_distance_replaceplot.png')
     plt.close()
 
     return d, steps      
