@@ -429,7 +429,7 @@ def main():
       calculation_type = st.selectbox(
         "Física:",
         ["Intensidade da Corrente", "Quantidade de Carga", "Tempo", "Raízes da Equação de Bhaskara",
-         "Campo Elétrico", "Força Elétrica", "Geometria Plana", "Velocidade Média", "Movimento Uniforme",
+         "Campo Elétrico", "Força Elétrica", "Velocidade Média", "Movimento Uniforme",
          "Movimento Uniformemente Acelerado","Gravitação universal", "Equação de Torricelli"]
 
 
