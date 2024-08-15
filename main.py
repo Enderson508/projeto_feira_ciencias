@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # Constante de Coulomb
 K = 9e9  # N m²/C²
 # constante de newthon
-G = 6.674 * 10e-11
+G = 6.674 * 10**-11
 
 # pi
 π = 3.14
@@ -148,6 +148,7 @@ def calculate_distance_replace(Mas1, Mas2, F):
             f"\n$$d^2 = \\frac{{G \\cdot M1 \\cdot M2}}{{F}}$$\n"\
             f"\n### Substituindo Valores\n"\
             f"\n$$d^2 = \\frac{{{G} \\cdot{Mas1} \\cdot {Mas2}}}{{{F}}}$$\n"\
+            f"\n$$d = \\sqrt{{{{{distance}}}}}$$\n " \
             f"\n### Resultado\n"\
             f"\n$$d = {d:.2e} \\text{{ m}}$$\n"
 
