@@ -567,17 +567,21 @@ def main():
 
     #GEOMETRIA PLANA            
     
-                
-                
-    calculate_ss = st.selectbox(
+
+
+
+  calculate_ss = st.selectbox(
       "Matemática:",
       ["Raízes da Equação de Bhaskara", "Geometria Plana"]
       )
+
+
+    
       elif calculate_ss == "Raízes da Equação de Bhaskara":
-        a = st.number_input("Digite o valor de a", value=1.0)
-        b = st.number_input("Digite o valor de b", value=0.0)
-        c = st.number_input("Digite o valor de c", value=0.0)
-        if st.button("Calcular Raízes"):
+         a = st.number_input("Digite o valor de a", value=1.0)
+         b = st.number_input("Digite o valor de b", value=0.0)
+         c = st.number_input("Digite o valor de c", value=0.0)
+         if st.button("Calcular Raízes"):
             roots, steps = bhaskara(a, b, c)
             if roots[0] is not None:
                 st.write(f"Raízes: x1 = {roots[0]:.2f}, x2 = {roots[1]:.2f}")
@@ -585,8 +589,8 @@ def main():
                 st.image('bhaskara_plot.png')
 
 
-      #GEOMETRIA PLANA            
-      elif calculate_ss == "Geometria Plana":
+       #GEOMETRIA PLANA            
+       elif calculate_ss == "Geometria Plana":
         raio = st.number_input("Digite o  raio (r)", value=0.0)
         if st.button("Calcular CÃ­rculo"):
             are, steps = calculate_area_replace(Ï€ , raio)
