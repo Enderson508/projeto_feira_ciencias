@@ -577,7 +577,7 @@ def main():
 
 
     
-      elif calculate_ss == "Raízes da Equação de Bhaskara":
+       elif calculate_ss == "Raízes da Equação de Bhaskara":
          a = st.number_input("Digite o valor de a", value=1.0)
          b = st.number_input("Digite o valor de b", value=0.0)
          c = st.number_input("Digite o valor de c", value=0.0)
