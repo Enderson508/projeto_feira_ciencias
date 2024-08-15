@@ -508,7 +508,7 @@ def main():
         charge = st.number_input("Digite a carga (C)", value=0.0)
         distance = st.number_input("Digite a distância (m)", value=0.0)
         if st.button("Calcular Campo Elétrico"):
-                        field, steps = calculate_electric_field(charge, distance)
+            field, steps = calculate_electric_field(charge, distance)
             if field is not None:
                 st.write(f"Campo Elétrico: {field:.2f} N/C")
                 st.markdown(steps)
