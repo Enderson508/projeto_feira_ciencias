@@ -481,7 +481,16 @@ def main():
                 st.markdown(steps)
                 st.image('time_plot.png')
 
-    
+    elif calculate_ss == "Raízes da Equação de Bhaskara":
+        a = st.number_input("Digite o valor de a", value=1.0)
+        b = st.number_input("Digite o valor de b", value=0.0)
+        c = st.number_input("Digite o valor de c", value=0.0)
+        if st.button("Calcular Raízes"):
+            roots, steps = bhaskara(a, b, c)
+            if roots[0] is not None:
+                st.write(f"Raízes: x1 = {roots[0]:.2f}, x2 = {roots[1]:.2f}")
+                st.markdown(steps)
+                st.image('bhaskara_plot.png')
 
     elif calculation_type == "Gravitação universal":
         Massa1 = st.number_input("Digite a massa 1 (kg)", value=0.0)
@@ -508,7 +517,7 @@ def main():
         charge = st.number_input("Digite a carga (C)", value=0.0)
         distance = st.number_input("Digite a distância (m)", value=0.0)
         if st.button("Calcular Campo Elétrico"):
-            field, steps = calculate_electric_field(charge, distance)
+                        field, steps = calculate_electric_field(charge, distance)
             if field is not None:
                 st.write(f"Campo Elétrico: {field:.2f} N/C")
                 st.markdown(steps)
@@ -565,57 +574,45 @@ def main():
                 st.image('displacement_plot.png')
 
 
-    #GEOMETRIA PLANA            
     
-
-
-
-  calculate_ss = st.selectbox(
+                
+                
+    calculate_ss = st.selectbox(
       "Matemática:",
-      ["Raízes da Equação de Bhaskara", "Geometria Plana"]
+      ["Geometria Plana", "Raízes da Equação de Bhaskara"]
       )
 
 
-    
-       elif calculate_ss == "Raízes da Equação de Bhaskara":
-          a = st.number_input("Digite o valor de a", value=1.0)
-          b = st.number_input("Digite o valor de b", value=0.0)
-          c = st.number_input("Digite o valor de c", value=0.0)
-          if st.button("Calcular Raízes"):
-             roots, steps = bhaskara(a, b, c)
-             if roots[0] is not None:
-                st.write(f"Raízes: x1 = {roots[0]:.2f}, x2 = {roots[1]:.2f}")
-                st.markdown(steps)
-                st.image('bhaskara_plot.png')
 
-
-       #GEOMETRIA PLANA            
-       elif calculate_ss == "Geometria Plana":
+      #GEOMETRIA PLANA            
+      elif calculate_ss == "Geometria Plana":
         raio = st.number_input("Digite o  raio (r)", value=0.0)
-        if st.button("Calcular CÃ­rculo"):
-            are, steps = calculate_area_replace(Ï€ , raio)
+        if st.button("Calcular Círculo"):
+            are, steps = calculate_area_replace(π , raio)
             if are is not None:
-                st.write(f"Ãrea: {are:.2f}")
+                st.write(f"Área: {are:.2f}")
                 st.markdown(steps)
                 st.image('area_plot.png')
 
         ary = st.number_input("Base", value=0.0)
         h = st.number_input("Altura(h)", value=0.0)
-        if  st.button("Calcular Ãrea do triÃ¢ngulo"):
+        if  st.button("Calcular Área do triângulo"):
             hrr, steps = calculate_triangle_ll(ary, h)
             if hrr is not None:
-                st.write(f"Ãrea: {hrr:.2f}") 
+                st.write(f"Área: {hrr:.2f}") 
                 st.markdown(steps)
                 st.image('area_triangle.png')
         trap = st.number_input("Base (1)", value = 0.0)
         trapl = st.number_input("Base (2)", value = 0.0)  
         hll = st.number_input("Alturas(h)", value = 0.0)
-        if st.button('Calcular Ãrea do trapÃ©zio'):
+        if st.button('Calcular Área do trapézio'):
             result, steps = calculate_area_trapez(trap, trapl, hll)
             if result is not None:
-                st.write(f"Ãrea: {result:.2f}") 
+                st.write(f"Área: {result:.2f}") 
                 st.markdown(steps)
-                st.image('area_trapezio.png')
+                st.image('area_trapezio.png')            
+
+
 
 
 
