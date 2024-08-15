@@ -428,7 +428,7 @@ def calculate_displacement_uniformly_accelerated_motion(initial_velocity, accele
 def main():
     st.title("Calculadora de Física e Matemática")
     calculation_type = st.selectbox(
-     "Física:",
+     "$$Física:$$",
      ["Intensidade da Corrente", "Quantidade de Carga", "Tempo",
          "Campo Elétrico", "Força Elétrica", "Velocidade Média", "Movimento Uniforme",
          "Movimento Uniformemente Acelerado","Gravitação universal", "Equação de Torricelli"]
@@ -569,7 +569,7 @@ def main():
                 
                 
     calculate_ss = st.selectbox(
-      "Matemática:",
+      "$$Matemática:$$",
       ["Raízes da Equação de Bhaskara", "Geometria Plana"]
     )            
 
