@@ -53,7 +53,7 @@ def calculate_area_replace(π, raio):
             f"\n$$A = {π} \\cdot {raio}^2$$\n" \
             f"\n##Resultado\n"\
             f"\n$$A = {are:.2f} \\text A$$\n"\
-            
+
 
     # Plotar gráfico
     distance_val = list(range(1, 11))  # Distância de 1 a 10 metros
@@ -77,7 +77,7 @@ def calculate_triangle_ll(h, ary):
             f"\n$$A = \\frac{{ {ary} \\cdot {h}}}{{{2}}}$$\n" \
             f"\n## Resultado\n" \
             f"\n$$A = {hrr:.2f}$$\n"
-    
+
 
     distance_vllil = list(range(1, 11))  # Distância de 1 a 10 metros
     velocity_vllil = [hrr * d_val for d_val in distance_vllil]  # Usar a área calculada no gráfico
@@ -101,7 +101,7 @@ def calculate_area_trapez(trap, trapl, hll):
             f"\n$$A = \\frac{{ ({trap} + {trapl}) \\cdot {hll}}}{{{2}}}$$\n" \
             f"\n## Resultado\n" \
             f"\n$$A = {result:.2f}$$\n"
-    
+
     distance_trap = list(range(1, 11))  # Distância de 1 a 10 metros
     velocity_trap = [result * d_val for d_val in distance_trap]  # Usar a área calculada no gráfico
     plt.figure(figsize=(10, 5))
@@ -150,7 +150,7 @@ def calculate_distance_replace(Mas1, Mas2, F):
             f"\n$$d^2 = \\frac{{{G} \\cdot{Mas1} \\cdot {Mas2}}}{{{F}}}$$\n"\
             f"\n### Resultado\n"\
             f"\n$$d = {d:.2e} \\text{{ m}}$$\n"
-            
+
     distance_vals = list(range(1, 11))  # Distância de 1 a 10 metros
     force_vals = [G * Mas1 * Mas2 / (d_val ** 2) for d_val in distance_vals]
 
@@ -164,7 +164,7 @@ def calculate_distance_replace(Mas1, Mas2, F):
     plt.close()
 
     return d, steps      
-           
+
 
 #Função para calcular torriceli
 def calculate_torricelli_force(vi, a, s):
@@ -177,7 +177,7 @@ def calculate_torricelli_force(vi, a, s):
         f"\n$$Vf^2 = {vi}^2 + 2 \\cdot {a}\\cdot {s}$$\n"\
         f"\n### Resultado\n"\
         f"\n$$Vf = {vf:.2f} \\text{{ m/s}}$$\n"
-    
+
     # Plotar gráfico
     distance_vals = list(range(1, 11))  # Distância de 1 a 10 metros
     velocity_vals = [math.sqrt(vi**2 + 2*a*d_val) for d_val in distance_vals]
@@ -191,7 +191,7 @@ def calculate_torricelli_force(vi, a, s):
     plt.close()
     return velocit, steps
 
-    
+
 
 # Função para calcular a quantidade de carga
 def calculate_charge(current, time):
@@ -426,19 +426,19 @@ def calculate_displacement_uniformly_accelerated_motion(initial_velocity, accele
 # Função principal
 def main():
     st.title("Calculadora de Física e Matemática")
-    
+
     calculation_type = st.selectbox(
-        "Escolha o tipo de cálculo:",
+        "Física:",
         ["Intensidade da Corrente", "Quantidade de Carga", "Tempo", "Raízes da Equação de Bhaskara",
          "Campo Elétrico", "Força Elétrica", "Geometria Plana", "Velocidade Média", "Movimento Uniforme",
          "Movimento Uniformemente Acelerado","Gravitação universal", "Equação de Torricelli"]
 
 
     )    
-    
 
 
-    
+
+
     if calculation_type == "Intensidade da Corrente":
         charge = st.number_input("Digite a carga (C)", value=0.0)
         time = st.number_input("Digite o tempo (s)", value=0.0)
@@ -481,7 +481,7 @@ def main():
                 st.markdown(steps)
                 st.image('time_plot.png')
 
-    elif calculation_type == "Raízes da Equação de Bhaskara":
+    elif calculate_ss == "Raízes da Equação de Bhaskara":
         a = st.number_input("Digite o valor de a", value=1.0)
         b = st.number_input("Digite o valor de b", value=0.0)
         c = st.number_input("Digite o valor de c", value=0.0)
@@ -517,7 +517,7 @@ def main():
         charge = st.number_input("Digite a carga (C)", value=0.0)
         distance = st.number_input("Digite a distância (m)", value=0.0)
         if st.button("Calcular Campo Elétrico"):
-            field, steps = calculate_electric_field(charge, distance)
+                        field, steps = calculate_electric_field(charge, distance)
             if field is not None:
                 st.write(f"Campo Elétrico: {field:.2f} N/C")
                 st.markdown(steps)
@@ -575,7 +575,7 @@ def main():
 
 
     #GEOMETRIA PLANA            
-    elif calculation_type == "Geometria Plana":
+    elif calculate_ss == "Geometria Plana":
         raio = st.number_input("Digite o  raio (r)", value=0.0)
         if st.button("Calcular Círculo"):
             are, steps = calculate_area_replace(π , raio)
@@ -583,7 +583,7 @@ def main():
                 st.write(f"Área: {are:.2f}")
                 st.markdown(steps)
                 st.image('area_plot.png')
-    
+
         ary = st.number_input("Base", value=0.0)
         h = st.number_input("Altura(h)", value=0.0)
         if  st.button("Calcular Área do triângulo"):
@@ -601,12 +601,18 @@ def main():
                 st.write(f"Área: {result:.2f}") 
                 st.markdown(steps)
                 st.image('area_trapezio.png')
+                
+                
+    calculate_ss = st.selectbox(
+      "Matemática:",
+      ["Geometria Plana", "Raízes da Equação de Bhaskara"]
+      )            
 
 
 
 
-     
-            
+
+
 
 
 
