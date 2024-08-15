@@ -574,7 +574,7 @@ def main():
 
 
 
-    elif calculate_ss == "Raízes da Equação de Bhaskara":
+    if calculate_ss == "Raízes da Equação de Bhaskara":
         a = st.number_input("Digite o valor de a", value=1.0)
         b = st.number_input("Digite o valor de b", value=0.0)
         c = st.number_input("Digite o valor de c", value=0.0)
@@ -586,7 +586,7 @@ def main():
                 st.image('bhaskara_plot.png')
                 
     #GEOMETRIA PLANA            
-    if calculate_ss == "Geometria Plana":
+    elif calculate_ss == "Geometria Plana":
         raio = st.number_input("Digite o  raio (r)", value=0.0)
         if st.button("Calcular Círculo"):
             are, steps = calculate_area_replace(π , raio)
