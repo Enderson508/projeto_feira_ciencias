@@ -569,9 +569,22 @@ def main():
                 
     calculate_ss = st.selectbox(
       "Matemática:",
-      ["Geometria Plana", "Raízes da Equação de Bhaskara"]
+      [""Raízes da Equação de Bhaskara", "Geometria Plana"]
     )            
 
+
+
+    elif calculate_ss == "Raízes da Equação de Bhaskara":
+        a = st.number_input("Digite o valor de a", value=1.0)
+        b = st.number_input("Digite o valor de b", value=0.0)
+        c = st.number_input("Digite o valor de c", value=0.0)
+        if st.button("Calcular Raízes"):
+            roots, steps = bhaskara(a, b, c)
+            if roots[0] is not None:
+                st.write(f"Raízes: x1 = {roots[0]:.2f}, x2 = {roots[1]:.2f}")
+                st.markdown(steps)
+                st.image('bhaskara_plot.png')
+                
     #GEOMETRIA PLANA            
     if calculate_ss == "Geometria Plana":
         raio = st.number_input("Digite o  raio (r)", value=0.0)
@@ -599,18 +612,7 @@ def main():
                 st.write(f"Área: {result:.2f}") 
                 st.markdown(steps)
                 st.image('area_trapezio.png')
-
-    elif calculate_ss == "Raízes da Equação de Bhaskara":
-        a = st.number_input("Digite o valor de a", value=1.0)
-        b = st.number_input("Digite o valor de b", value=0.0)
-        c = st.number_input("Digite o valor de c", value=0.0)
-        if st.button("Calcular Raízes"):
-            roots, steps = bhaskara(a, b, c)
-            if roots[0] is not None:
-                st.write(f"Raízes: x1 = {roots[0]:.2f}, x2 = {roots[1]:.2f}")
-                st.markdown(steps)
-                st.image('bhaskara_plot.png')
-
+                
 
 
 
