@@ -499,7 +499,7 @@ def main():
             force, steps = calculate_gravitational_force(Massa1, Massa2, Distância)
             distance, steps = calculate_distance_replace(Massa1, Massa2, Distância)
             if distance is not None:
-                st.write(f"Distância: {distance:.2f} m/s")
+                st.write(f"Distância: {distance:.2f} N")
                 st.markdown(steps)
                 st.image('gravitational_distance_replaceplot.png')
 
