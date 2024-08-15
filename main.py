@@ -426,15 +426,14 @@ def calculate_displacement_uniformly_accelerated_motion(initial_velocity, accele
 # Função principal
 def main():
     st.title("Calculadora de Física e Matemática")
-
-    calculation_type = st.selectbox(
+      calculation_type = st.selectbox(
         "Física:",
         ["Intensidade da Corrente", "Quantidade de Carga", "Tempo", "Raízes da Equação de Bhaskara",
          "Campo Elétrico", "Força Elétrica", "Geometria Plana", "Velocidade Média", "Movimento Uniforme",
          "Movimento Uniformemente Acelerado","Gravitação universal", "Equação de Torricelli"]
 
 
-    )    
+    ) 
 
 
 
@@ -574,7 +573,7 @@ def main():
       )            
 
     #GEOMETRIA PLANA            
-    elif calculate_ss == "Geometria Plana":
+   elif calculate_ss == "Geometria Plana":
         raio = st.number_input("Digite o  raio (r)", value=0.0)
         if st.button("Calcular Círculo"):
             are, steps = calculate_area_replace(π , raio)
