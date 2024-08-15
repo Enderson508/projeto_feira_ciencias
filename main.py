@@ -428,7 +428,7 @@ def main():
     st.title("Calculadora de Física e Matemática")
     calculation_type = st.selectbox(
      "Física:",
-     ["Intensidade da Corrente", "Quantidade de Carga", "Tempo", "Raízes da Equação de Bhaskara",
+     ["Intensidade da Corrente", "Quantidade de Carga", "Tempo",
          "Campo Elétrico", "Força Elétrica", "Velocidade Média", "Movimento Uniforme",
          "Movimento Uniformemente Acelerado","Gravitação universal", "Equação de Torricelli"]
 
