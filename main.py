@@ -481,16 +481,7 @@ def main():
                 st.markdown(steps)
                 st.image('time_plot.png')
 
-    elif calculate_ss == "Raízes da Equação de Bhaskara":
-        a = st.number_input("Digite o valor de a", value=1.0)
-        b = st.number_input("Digite o valor de b", value=0.0)
-        c = st.number_input("Digite o valor de c", value=0.0)
-        if st.button("Calcular Raízes"):
-            roots, steps = bhaskara(a, b, c)
-            if roots[0] is not None:
-                st.write(f"Raízes: x1 = {roots[0]:.2f}, x2 = {roots[1]:.2f}")
-                st.markdown(steps)
-                st.image('bhaskara_plot.png')
+
 
     elif calculation_type == "Gravitação universal":
         Massa1 = st.number_input("Digite a massa 1 (kg)", value=0.0)
@@ -574,18 +565,16 @@ def main():
                 st.image('displacement_plot.png')
 
 
-    
+
                 
                 
     calculate_ss = st.selectbox(
       "Matemática:",
       ["Geometria Plana", "Raízes da Equação de Bhaskara"]
-      )
+      )            
 
-
-
-      #GEOMETRIA PLANA            
-      elif calculate_ss == "Geometria Plana":
+    #GEOMETRIA PLANA            
+    elif calculate_ss == "Geometria Plana":
         raio = st.number_input("Digite o  raio (r)", value=0.0)
         if st.button("Calcular Círculo"):
             are, steps = calculate_area_replace(π , raio)
@@ -610,10 +599,18 @@ def main():
             if result is not None:
                 st.write(f"Área: {result:.2f}") 
                 st.markdown(steps)
-                st.image('area_trapezio.png')            
+                st.image('area_trapezio.png')
 
-
-
+    elif calculate_ss == "Raízes da Equação de Bhaskara":
+        a = st.number_input("Digite o valor de a", value=1.0)
+        b = st.number_input("Digite o valor de b", value=0.0)
+        c = st.number_input("Digite o valor de c", value=0.0)
+        if st.button("Calcular Raízes"):
+            roots, steps = bhaskara(a, b, c)
+            if roots[0] is not None:
+                st.write(f"Raízes: x1 = {roots[0]:.2f}, x2 = {roots[1]:.2f}")
+                st.markdown(steps)
+                st.image('bhaskara_plot.png')
 
 
 
