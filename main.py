@@ -126,7 +126,7 @@ def calculate_gravitational_force(mass1, mass2, distance):
             f"\n### Substituindo os valores\n" \
             f"\n$$F = \\frac{{{G} \\cdot {mass1} \\cdot {mass2}}}{{{distance}^2}}$$\n" \
             f"\n### Resultado\n" \
-            f"\n$$F = {force:.2e} \\text{{ m/s²}}$$\n"
+            f"\n$$F = {force:.2e} \\text{{ N}}$$\n"
     # Plotar gráfico
     distance_vals = list(range(1, 11))  # Distância de 1 a 10 metros
     force_vals = [G * mass1 * mass2 / (d_val ** 2) for d_val in distance_vals]
@@ -150,7 +150,7 @@ def calculate_distance_replace(Mas1, Mas2, F):
             f"\n$$d^2 = \\frac{{{G} \\cdot{Mas1} \\cdot {Mas2}}}{{{F}}}$$\n"\
             f"\n$$d = \\sqrt{{{{{distance}}}}}$$\n " \
             f"\n### Resultado\n"\
-            f"\n$$d = {d:.2e} \\text{{ m}}$$\n"
+            f"\n$$d = {d:.2e} \\text{{ M}}$$\n"
 
     distance_vals = list(range(1, 11))  # Distância de 1 a 10 metros
     force_vals = [G * Mas1 * Mas2 / (d_val ** 2) for d_val in distance_vals]
