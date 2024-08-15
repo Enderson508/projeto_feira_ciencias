@@ -586,7 +586,7 @@ def main():
 
 
       #GEOMETRIA PLANA            
-    elif calculate_ss == "Geometria Plana":
+      elif calculate_ss == "Geometria Plana":
         raio = st.number_input("Digite o  raio (r)", value=0.0)
         if st.button("Calcular CÃ­rculo"):
             are, steps = calculate_area_replace(Ï€ , raio)
