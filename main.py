@@ -570,7 +570,7 @@ def main():
     calculate_ss = st.selectbox(
       "Matemática:",
       ["Geometria Plana", "Raízes da Equação de Bhaskara"]
-      )            
+    )            
 
     #GEOMETRIA PLANA            
    elif calculate_ss == "Geometria Plana":
