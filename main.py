@@ -569,7 +569,7 @@ def main():
                 
     calculate_ss = st.selectbox(
       "Matemática:",
-      [""Raízes da Equação de Bhaskara", "Geometria Plana"]
+      ["Raízes da Equação de Bhaskara", "Geometria Plana"]
     )            
 
 
