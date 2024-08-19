@@ -1,6 +1,9 @@
 import streamlit as st
 import math
 import matplotlib.pyplot as plt
+import bcrypt
+import json
+import os
 
 # Constante de Coulomb
 K = 9e9  # N m²/C²
@@ -424,9 +427,270 @@ def calculate_displacement_uniformly_accelerated_motion(initial_velocity, accele
     plt.close()
     return displacement, steps
 
+friend_requests = []
+
+def load_users():
+    if not os.path.exists('users.json') or os.stat('users.json').st_size == 0:
+        return {}
+    with open('users.json', 'r') as f:
+        return json.load(f)
+
+# Função para salvar os usuários no arquivo JSON
+def save_users(users):
+    with open('users.json', 'w') as f:
+        json.dump(users, f, indent=4)
+
+# Função para verificar o login
+def verify_login(username, password):
+    users = load_users()
+    if username in users:
+        hashed_password = users[username]['password']
+        return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
+    return False
+
+# Função para registrar um novo usuário
+def register_user(username, password):
+    users = load_users()
+    if username in users:
+        return False
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    users[username] = {
+        'password': hashed_password.decode('utf-8'),
+        'friends': []  # Adiciona uma lista de amigos vazia
+    }
+    save_users(users)
+    return True
+
+# Função para aceitar solicitação de amizade
+def accept_friend_request(requester, accepter):
+    users = load_users()
+    users[accepter].setdefault('friends', []).append(requester)
+    users[requester].setdefault('friends', []).append(accepter)
+    save_users(users)
+    # Remover a notificação após aceitar a solicitação
+    remove_notification(accepter, requester)
+
+
+# Função para exibir a página de login/registro
+def auth_page():
+    st.title("Login ou Registro")
+    option = st.radio("Escolha uma opção:", ("Login", "Registrar"))
+
+    if option == "Login":
+        st.subheader("Login")
+        login_username = st.text_input("Nome de Usuário (Login)", key='login_user')
+        login_password = st.text_input("Senha (Login)", type='password', key='login_pass')
+        if st.button("Entrar"):
+            if verify_login(login_username, login_password):
+                st.session_state['logged_in'] = True
+                st.session_state['username'] = login_username
+                st.session_state['page'] = 'main'
+            else:
+                st.error("Nome de usuário ou senha incorretos.")
+
+    elif option == "Registrar":
+        st.subheader("Registro")
+        register_username = st.text_input("Nome de Usuário (Registro)", key='register_user')
+        register_password = st.text_input("Senha (Registro)", type='password', key='register_pass')
+        register_password_confirm = st.text_input("Confirmar Senha", type='password', key='register_pass_confirm')
+        if st.button("Registrar"):
+            if register_password != register_password_confirm:
+                st.error("As senhas não coincidem.")
+            elif register_user(register_username, register_password):
+                st.success("Registro bem-sucedido! Agora você pode fazer login.")
+                st.session_state['page'] = 'main'
+            else:
+                st.error("Nome de usuário já existe.")
+
+with open('users.json', 'r') as f:
+    users = json.load(f)
+
+users_dict = [{'username': user} for user in users]
+
+
+def save_messages(messages):
+    try:
+        # Converter chaves de tuplas para strings
+        messages_str_keys = {str(key): value for key, value in messages.items()}
+        with open('messages.json', 'w') as f:
+            json.dump(messages_str_keys, f, indent=4)
+    except TypeError as e:
+        print("Erro ao salvar mensagens:", e)
+
+def convert_keys_to_str(d):
+    new_dict = {}
+    for k, v in d.items():
+        if isinstance(k, tuple):
+            k = str(k)
+        if isinstance(v, dict):
+            v = convert_keys_to_str(v)
+        new_dict[k] = v
+    return new_dict
+
+
+# Função para carregar as mensagens
+def load_messages():
+    if not os.path.exists('messages.json') or os.stat('messages.json').st_size == 0:
+        return {}
+    try:
+        with open('messages.json', 'r') as f:
+            # Converter chaves de volta para tuplas
+            messages_str_keys = json.load(f)
+            messages = {tuple(eval(key)): value for key, value in messages_str_keys.items()}
+            return messages
+    except json.JSONDecodeError:
+        # Arquivo JSON está corrompido, inicializar com um dicionário vazio
+        return {}
+    
+def store_notification(to_user, message):
+    if not os.path.exists('notifications.json') or os.stat('notifications.json').st_size == 0:
+        with open('notifications.json', 'w') as f:
+            json.dump([], f)
+
+    with open('notifications.json', 'r+') as f:
+        notifications = json.load(f)
+        notifications.append({'to': to_user, 'message': message})
+        f.seek(0)
+        json.dump(notifications, f, indent=4)
+        f.truncate()
+
+def check_notifications(username):
+    with open('notifications.json', 'r') as f:
+        notifications = json.load(f)
+        user_notifications = [notification for notification in notifications if notification['to'] == username]
+        return user_notifications        
+
+def accept_friend_request(requester, accepter):
+    with open('users.json', 'r+') as f:
+        users = json.load(f)
+        # Adiciona cada usuário à lista de amigos do outro
+        users[accepter].setdefault('friends', []).append(requester)
+        users[requester].setdefault('friends', []).append(accepter)
+        f.seek(0)
+        json.dump(users, f, indent=4)
+        f.truncate()
+
+    # Remover a notificação após aceitar a solicitação
+    remove_notification(accepter, requester)
+
+def recuse_friend_request(requester, accepter):
+    # Apenas removemos a notificação
+    remove_notification(accepter, requester)
+
+def remove_notification(username, from_user):
+    with open('notifications.json', 'r+') as f:
+        notifications = json.load(f)
+        notifications = [n for n in notifications if not (n['to'] == username and n['message']['from'] == from_user)]
+        f.seek(0)
+        json.dump(notifications, f, indent=4)
+        f.truncate()    
+
+def notifications_page():
+    st.sidebar.title("Notificações")
+    username = st.session_state['username']
+    notifications = check_notifications(username)
+    
+    if notifications:
+        st.sidebar.write("Você tem novas notificações:")
+        for notification in notifications:
+            if notification['message']['type'] == 'friend_request':
+                st.sidebar.write(f"Você recebeu um convite de amizade de {notification['message']['from']}!")
+                if st.sidebar.button('Aceitar solicitação', key=f"accept_{notification['message']['from']}"):
+                    accept_friend_request(notification['message']['from'], username)
+                    st.sidebar.write(f"Solicitação de amizade aceita! Agora você é amigo de {notification['message']['from']}.")
+                if st.sidebar.button('Recusar solicitação', key=f"recuse_{notification['message']['from']}"):
+                    recuse_friend_request(notification['message']['from'], username)
+                    st.sidebar.write(f"Solicitação de amizade recusada.")
+    else:
+        st.sidebar.write("Você não tem novas notificações.")
+
+
+
+#PAGINA DE CHATS
+
+def chat_page():
+    st.sidebar.title("Chats")
+    users = load_users()
+    current_user = st.session_state['username']
+
+    if 'friends' in users[current_user]:
+        friends = users[current_user]['friends']
+        friend_to_chat = st.sidebar.selectbox("Selecione um amigo para conversar:", friends)
+
+        if friend_to_chat:
+            messages = load_messages()
+            conversation_key = tuple(sorted([current_user, friend_to_chat]))
+
+            if conversation_key not in messages:
+                messages[conversation_key] = []
+
+            st.sidebar.write(f"Chat com {friend_to_chat}")
+
+            if messages[conversation_key]:
+                for message in messages[conversation_key]:
+                    st.sidebar.write(f"{message['sender']}: {message['text']}")
+
+            new_message = st.sidebar.text_input("Digite uma mensagem:")
+            if st.sidebar.button("Enviar"):
+                if new_message.strip() != "":
+                    messages[conversation_key].append({"sender": current_user, "text": new_message})
+                    save_messages(messages)
+                    st.rerun()  # Atualiza a página para mostrar a nova mensagem
+
+                else:
+                    st.sidebar.error("A mensagem não pode estar vazia.")
+
+            if st.sidebar.button("Atualizar"):
+                st.rerun()        
+    else:
+        st.sidebar.write("Você ainda não tem amigos adicionados.")
+
+
+
+def profile_page():
+    username = st.session_state['username']
+    notifications = check_notifications(username)
+    if notifications:
+        st.write("Notificações:")
+        for notification in notifications:
+            st.write(f"Você recebeu um convite de amizade de {notification['message']['from']}!")
+            notifications = check_notifications(username)
+    if notifications:
+        st.write("Solicitações de amizade pendentes:")
+        for notification in notifications:
+            if notification['type'] == 'friend_request':
+                st.write(f"{notification['from']} deseja adicionar você como amigo.")
+                if st.button('Aceitar solicitação'):
+                    accept_friend_request(notification['from'], st.session_state['username'])
+                    st.write(f"Solicitação de amizade aceita! Agora você é amigo de {notification['from']}.")
+                if st.button('Recusar solicitação'):
+                    recuse_friend_request(notification['from'], st.session_state['username'])
+                    st.write(f"Solicitação de amizade recusada.")
 # Função principal
-def main():
+def main_page():
     st.title("Calculadora de Física e Matemática")
+    search_query = st.sidebar.text_input("Pesquisar usuários")
+
+    if search_query:
+        results = [user for user in users_dict if search_query.lower() in user['username'].lower()]
+    else:
+        results = []
+
+    st.sidebar.write("Resultados:")
+    for result in results:
+        st.sidebar.write(f"Nome de usuário: {result['username']}")
+        if st.sidebar.button('Adicionar como amigo', key=result['username']):
+            sender = st.session_state['username']
+            receiver = result['username']
+            
+            # Armazena a notificação
+            store_notification(receiver, {'type': 'friend_request', 'from': sender})
+            
+            st.sidebar.write(f"Solicitação de amizade enviada para {receiver}!") 
+
+
+
+    
     calculation_type = st.selectbox(
      f"$$Física:$$",
      ["Intensidade da Corrente", "Quantidade de Carga", "Tempo",
@@ -436,6 +700,22 @@ def main():
 
     ) 
 
+    config_type = st.sidebar.selectbox(
+        "Funções",
+        ["Perfil", "Notificações","Amigos"]
+    )
+
+    if config_type == "Perfil":
+        st.sidebar.write(f"Nome de usuário: {st.session_state['username']}")
+        
+        
+    elif config_type == "Notificações":
+        notifications_page()
+
+    elif config_type == "Amigos":
+        chat_page()    
+
+    # Filter users
 
 
 
@@ -615,7 +895,16 @@ def main():
                 st.image('area_trapezio.png')
                 
 
+def main():
+    if 'page' not in st.session_state:
+        st.session_state['page'] = 'auth'
+    if 'logged_in' not in st.session_state:
+        st.session_state['logged_in'] = False
 
+    if st.session_state['page'] == 'auth':
+        auth_page()
+    elif st.session_state['logged_in']:
+        main_page()
 
 
 
