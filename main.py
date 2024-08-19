@@ -543,26 +543,41 @@ def load_messages():
         return {}
     
 def store_notification(to_user, message):
+    # Verifique se o arquivo existe e está vazio
     if not os.path.exists('notifications.json') or os.stat('notifications.json').st_size == 0:
         with open('notifications.json', 'w') as f:
             json.dump([], f)
-
+    
     try:
         with open('notifications.json', 'r+') as f:
             notifications = json.load(f)
+            # Verifique se notifications é uma lista
+            if not isinstance(notifications, list):
+                raise ValueError("O arquivo de notificações não contém uma lista válida.")
             notifications.append({'to': to_user, 'message': message})
             f.seek(0)
             json.dump(notifications, f, indent=4)
             f.truncate()
     except Exception as e:
         st.error(f"Erro ao armazenar notificação: {e}")
-        
-def check_notifications(username):
-    with open('notifications.json', 'r') as f:
-        notifications = json.load(f)
-        user_notifications = [notification for notification in notifications if notification['to'] == username]
-        return user_notifications        
 
+
+def check_notifications(username):
+    if not os.path.exists('notifications.json') or os.stat('notifications.json').st_size == 0:
+        return []
+    
+    try:
+        with open('notifications.json', 'r') as f:
+            notifications = json.load(f)
+            # Verifique se notifications é uma lista
+            if not isinstance(notifications, list):
+                raise ValueError("O arquivo de notificações não contém uma lista válida.")
+            user_notifications = [notification for notification in notifications if notification['to'] == username]
+            return user_notifications
+    except Exception as e:
+        st.error(f"Erro ao verificar notificações: {e}")
+        return []
+    
 def accept_friend_request(requester, accepter):
     with open('users.json', 'r+') as f:
         users = json.load(f)
@@ -581,12 +596,22 @@ def recuse_friend_request(requester, accepter):
     remove_notification(accepter, requester)
 
 def remove_notification(username, from_user):
-    with open('notifications.json', 'r+') as f:
-        notifications = json.load(f)
-        notifications = [n for n in notifications if not (n['to'] == username and n['message']['from'] == from_user)]
-        f.seek(0)
-        json.dump(notifications, f, indent=4)
-        f.truncate()    
+    if not os.path.exists('notifications.json') or os.stat('notifications.json').st_size == 0:
+        return
+    
+    try:
+        with open('notifications.json', 'r+') as f:
+            notifications = json.load(f)
+            # Verifique se notifications é uma lista
+            if not isinstance(notifications, list):
+                raise ValueError("O arquivo de notificações não contém uma lista válida.")
+            notifications = [n for n in notifications if not (n['to'] == username and n['message']['from'] == from_user)]
+            f.seek(0)
+            json.dump(notifications, f, indent=4)
+            f.truncate()
+    except Exception as e:
+        st.error(f"Erro ao remover notificação: {e}")
+          
 
 def notifications_page():
     st.sidebar.title("Notificações")
