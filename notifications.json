@@ -1,0 +1,37 @@
+[
+    {
+        "to": "uuuu",
+        "message": {
+            "type": "friend_request",
+            "from": "uu"
+        }
+    },
+    {
+        "to": "uuuu",
+        "message": {
+            "type": "friend_request",
+            "from": "uu"
+        }
+    },
+    {
+        "to": "uuuu",
+        "message": {
+            "type": "friend_request",
+            "from": "us"
+        }
+    },
+    {
+        "to": "us",
+        "message": {
+            "type": "friend_request",
+            "from": "uuu"
+        }
+    },
+    {
+        "to": "uuuu",
+        "message": {
+            "type": "friend_request",
+            "from": "uuu"
+        }
+    }
+]

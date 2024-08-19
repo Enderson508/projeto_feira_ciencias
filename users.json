@@ -1,0 +1,23 @@
+{
+    "uu": "$2b$12$qNT.zpfvSuMMLbsAgmLJAenXAyWADmuAKD9hpkPc31S9XR13ZJ9J6",
+    "uuuu": "$2b$12$9//zqGIfNRMJ.vEdj7zJJONVJ7UdwjLRxyiYnocEQpTya3RKtxAg6",
+    "uuu": {
+        "password": "$2b$12$DAf.tUQOs9hGeM0dQBw0/.qjhfxKAlWfNmtArdzMpX9vQiRwMBlh.",
+        "friends": [
+            "us",
+            "User"
+        ]
+    },
+    "us": {
+        "password": "$2b$12$wzshL5GaNk7q0rC3lJoUROGsnzi82OUknErUeo8umA8Clv2PKHqdy",
+        "friends": [
+            "uuu"
+        ]
+    },
+    "User": {
+        "password": "$2b$12$Wtb68DdHTc2B.oaHT5uvbeRR45id/xbP6uDdWs0p3dvNDIDGebkpC",
+        "friends": [
+            "uuu"
+        ]
+    }
+}
