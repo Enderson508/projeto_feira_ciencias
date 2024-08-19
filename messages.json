@@ -1,0 +1,53 @@
+{
+    "('us', 'uuu')": [
+        {
+            "sender": "uuu",
+            "text": "como vai??"
+        },
+        {
+            "sender": "uuu",
+            "text": "como vai??"
+        },
+        {
+            "sender": "uuu",
+            "text": "bem"
+        },
+        {
+            "sender": "us",
+            "text": "bem"
+        },
+        {
+            "sender": "uuu",
+            "text": "bem"
+        }
+    ],
+    "(1, 2)": {
+        "content": "Hello, World!"
+    },
+    "('User', 'uuu')": [
+        {
+            "sender": "User",
+            "text": "Qual o resultado?"
+        },
+        {
+            "sender": "uuu",
+            "text": " \u0394 = b 2 \u2212 4 a c \u0394=b  2  \u22124ac  \u0394 = ( 5.0 ) 2 \u2212 4 \u22c5 3.0 \u22c5 \u2212 15.0 \u0394=(5.0)  2  \u22124\u22c53.0\u22c5\u221215.0  \u0394 = 25.0 \u2212 \u2212 180.0 \u0394=25.0\u2212\u2212180.0  \u0394 = 205.0 \u0394=205.0  C\u00e1lculo das Ra\u00edzes x = \u2212 b \u00b1 \u0394 2 a x=  2a \u2212b\u00b1  \u0394 \u200b   \u200b    x 1 = \u2212 5.0 + 205.0 2 \u22c5 3.0 x  1 \u200b  =  2\u22c53.0 \u22125.0+  205.0 \u200b   \u200b    x 1 = 1.55 x  1 \u200b  =1.55  x 2 = \u2212 5.0 \u2212 205.0 2 \u22c5 3.0 x  2 \u200b  =  2\u22c53.0 \u22125.0\u2212  205.0 \u200b   \u200b    x 2 = \u2212 3.22 x  2 \u200b  =\u22123.22"
+        },
+        {
+            "sender": "uuu",
+            "text": "x1 = 1.55, x2 = -3.22"
+        },
+        {
+            "sender": "User",
+            "text": "Qual o resultado?"
+        },
+        {
+            "sender": "User",
+            "text": "oi"
+        },
+        {
+            "sender": "uuu",
+            "text": "ola"
+        }
+    ]
+}
