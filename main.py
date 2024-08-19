@@ -547,13 +547,16 @@ def store_notification(to_user, message):
         with open('notifications.json', 'w') as f:
             json.dump([], f)
 
-    with open('notifications.json', 'r+') as f:
-        notifications = json.load(f)
-        notifications.append({'to': to_user, 'message': message})
-        f.seek(0)
-        json.dump(notifications, f, indent=4)
-        f.truncate()
-
+    try:
+        with open('notifications.json', 'r+') as f:
+            notifications = json.load(f)
+            notifications.append({'to': to_user, 'message': message})
+            f.seek(0)
+            json.dump(notifications, f, indent=4)
+            f.truncate()
+    except Exception as e:
+        st.error(f"Erro ao armazenar notificação: {e}")
+        
 def check_notifications(username):
     with open('notifications.json', 'r') as f:
         notifications = json.load(f)
