@@ -668,7 +668,7 @@ def profile_page():
                     st.write(f"Solicitação de amizade recusada.")
 # Função principal
 def main_page():
-    st.title("Calculadora de Física e Matemática")
+    st.title("Calculadora Multifuncional")
     search_query = st.sidebar.text_input("Pesquisar usuários")
 
     if search_query:
